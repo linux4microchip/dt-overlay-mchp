@@ -13,21 +13,21 @@
 #include <dt-bindings/gpio/gpio.h>
 
 / {
-        compatible = "microchip,mpfs-video-kit","microchip,mpfs";
+        compatible = "microchip,mpfs-video-kit,mpfs-disco-kit","microchip,mpfs";
 };
 
 &{/} {
-	imx334_clk: imx334-clk {
+	imx219_clk: imx219-clk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
 		clock-frequency = <24000000>;
 	};
 
-	imx334_gate_clock0: imx334-gate-clock0 {
+	imx219_gate_clock0: imx219-gate-clock0 {
 		compatible = "gpio-gate-clock";
-		clocks = <&imx334_clk>;
+		clocks = <&imx219_clk>;
 		#clock-cells = <0>;
-		enable-gpios = <&gpio2 9 GPIO_ACTIVE_HIGH>;
+		enable-gpios = <&gpio2 23 GPIO_ACTIVE_HIGH>; //Cam__CLK_EN
 		status = "okay";
 	};
 
@@ -45,17 +45,16 @@
 };
 
 &i2c0 {
-	imx334_cam0: camera@1a {
-		compatible = "sony,imx334";
-		reset-gpios = <&gpio2 8 GPIO_ACTIVE_HIGH>;
-		clocks = <&imx334_gate_clock0>;
-		assigned-clocks = <&imx334_gate_clock0>;
+	imx219_cam0: camera@1a {
+		compatible = "sony,imx219";
+		clocks = <&imx219_gate_clock0>;
+		assigned-clocks = <&imx219_gate_clock0>;
 		assigned-clock-rates = <24000000>;
 		reg = <0x1a>;
 		port {
-			imx334_ep_cam0: endpoint {
+			imx219_ep_cam0: endpoint {
 				remote-endpoint = <&mchp_dscmi_ep_cam0>;
-				data-lanes = <1 2 3 4>;
+				data-lanes = <1 2>;
 				link-frequencies = /bits/ 64 <891000000 445500000>;
 			};
 		};
@@ -71,13 +70,13 @@
 		reg = <0x0 0x40000000 0x0 0x2000>;
 		interrupt-parent = <&plic>;
 		interrupts = <118>;
-		reset-gpios = <&gpio2 4 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&gpio2 17 GPIO_ACTIVE_HIGH>;
 		memory-region = <&cambuf0>;
 		dmas = <&pdma 0>;
 		dma-names = "rx";
 		port {
 			mchp_dscmi_ep_cam0: endpoint {
-				remote-endpoint = <&imx334_ep_cam0>;
+				remote-endpoint = <&imx219_ep_cam0>;
 			};
 		};
 	};

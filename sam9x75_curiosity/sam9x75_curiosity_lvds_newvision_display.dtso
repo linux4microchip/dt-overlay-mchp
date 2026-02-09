@@ -95,7 +95,7 @@
 	clock-names = "periph_clk", "lvds_pll_clk", "slow_clk";
 	status="okay";
 
-	hlcdc-display-controller {
+	display-controller {
 		port@0 {
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -106,7 +106,7 @@
 		};
 	};
 
-	hlcdc_pwm: hlcdc-pwm {
+	pwm {
 		status = "disabled";
 	};
 };

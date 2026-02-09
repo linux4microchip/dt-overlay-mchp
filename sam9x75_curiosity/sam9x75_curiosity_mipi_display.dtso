@@ -94,7 +94,7 @@
 	assigned-clock-rates = <66000000>;
 	status = "okay";
 
-	hlcdc-display-controller {
+	display-controller {
 		port@0 {
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -105,7 +105,7 @@
 		};
 	};
 
-	hlcdc_pwm: hlcdc-pwm {
+	pwm {
 		status = "disabled";
 	};
 };

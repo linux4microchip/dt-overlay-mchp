@@ -255,6 +255,21 @@
 			};
 		};
 
+		fdt_mikro_lan8650 {
+			description = "Device Tree blob LAN8650 10BaseT1S MAC-PHY click board";
+			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_mikro_lan8650.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23160000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_spi_click {
 			description = "Device Tree blob at25ff321a spi flash clickboard overlay";
 			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_at25ff321a_click.dtbo");
@@ -373,6 +388,11 @@
 		lan8670 {
 			description = "FDT overlay blob for a LAN8670 T1S PHY";
 			fdt = "fdt_gmac_lan8670";
+		};
+
+		lan8650 {
+			description = "FDT overlay blob for a LAN8650 T1S MAC-PHY";
+			fdt = "fdt_mikro_lan8650";
 		};
 
 		i2s_proto {

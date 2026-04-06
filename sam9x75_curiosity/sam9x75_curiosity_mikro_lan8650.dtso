@@ -1,0 +1,90 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree file for the SAM9X75 Curiosity board containing the
+ * overlay for the Two-Wire ETH Click board at the Mikroe connector.
+ *
+ *  Copyright (c) 2026 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&adc {
+	status = "disabled";	/* PB18 pin conflict with MIKROE IRQ pin. */
+};
+
+&flx3 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	status = "okay";
+};
+
+/* mikroBUS I2C interface */
+&i2c7 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	/* Provides MAC address. */
+	eeprom0: eeprom@58 {
+		compatible = "atmel,24mac402", "atmel,24c02";
+		reg = <0x58>;
+		read-only;
+
+		nvmem-layout {
+			compatible = "fixed-layout";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			eeprom0_eui48: eui48@9a {
+				reg = <0x9a 0x6>;
+			};
+		};
+	};
+};
+
+&pinctrl {
+	spi3 {
+		pinctrl_mikrobus_spi: mikrobus-spi {
+			atmel,pins = <AT91_PIOC 26 AT91_PERIPH_B AT91_PINCTRL_NONE
+					AT91_PIOC 23 AT91_PERIPH_B AT91_PINCTRL_NONE
+					AT91_PIOC 22 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+		};
+
+		pinctrl_mikrobus_spi_cs: mikrobus-spi-cs {
+			atmel,pins = <AT91_PIOC 24 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+		};
+	};
+	spi_irq {
+		pinctrl_mikro_irq: mikro-irq {
+			atmel,pins = <AT91_PIOB 18 AT91_PERIPH_GPIO
+				      AT91_PINCTRL_PULL_UP_DEGLITCH>;
+		};
+	};
+};
+
+&spi3 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_mikrobus_spi &pinctrl_mikrobus_spi_cs>;
+	status = "okay";
+
+	ethernet@1 {
+		compatible = "microchip,lan8651", "microchip,lan8650";
+		reg = <1>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mikro_irq>;
+		interrupt-parent = <&pioB>;
+		interrupts = <18 IRQ_TYPE_EDGE_FALLING>;
+		interrupt-names = "irq";
+		nvmem-cells = <&eeprom0_eui48>;
+		nvmem-cell-names = "mac-address";
+		spi-max-frequency = <10000000>;
+		status = "okay";
+	};
+};

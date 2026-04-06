@@ -285,6 +285,21 @@
 			};
 		};
 
+		fdt_mikro_lan8650 {
+			description = "Device Tree blob for LAN8650 MAC-PHY overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_mikro_lan8650.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61700000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_wm8731_proto {
 			description = "Device Tree blob for WM8731 Mikroe PROTO codec board overlay";
 			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_wm8731_proto.dtbo");
@@ -428,6 +443,11 @@
 		lan8870 {
 			description = "FDT overlay blob for LAN8870";
 			fdt = "fdt_gmac_lan8870";
+		};
+
+		lan8650 {
+			description = "FDT overlay blob for LAN8650";
+			fdt = "fdt_mikro_lan8650";
 		};
 
 		asrc_i2s1_wm8731 {

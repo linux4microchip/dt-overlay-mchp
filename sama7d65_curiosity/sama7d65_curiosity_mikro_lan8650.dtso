@@ -1,0 +1,127 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA7D65-CURIOSITY board
+ * overlay blob for the Two-Wire ETH Click board ()
+ * Mikroe Proto board.
+ *
+ * Copyright (C) 2026 Microchip Technology Inc. and its subsidiaries
+ * Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/*
+ * Disable the adc as pin PB7 is needed for MikroBUS 1 IRQ signal
+ * and causes pin muxing conflicts.
+ */
+&adc {
+	status = "disabled";
+};
+
+&flx0 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
+};
+
+&flx4 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	status = "okay";
+};
+
+/* mikroBUS I2C interface */
+&i2c0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c0_default>;
+	status = "okay";
+
+	/* Provides MAC address. */
+	eeprom0: eeprom@58 {
+		compatible = "atmel,24mac402", "atmel,24c02";
+		reg = <0x58>;
+		read-only;
+
+		nvmem-layout {
+			compatible = "fixed-layout";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			eeprom0_eui48: eui48@9a {
+				reg = <0x9a 0x6>;
+			};
+		};
+	};
+};
+
+&pioa {
+	pinctrl_i2c0_default: i2c0-default {
+		pinmux = <PIN_PC7__FLEXCOM0_IO0>,
+			 <PIN_PC6__FLEXCOM0_IO1>;
+		bias-disable;
+	};
+
+	pinctrl_mikro1_irq: mikrobus1-irq {
+		pinmux = <PIN_PB7__GPIO>;
+		bias-disable;
+	};
+
+	pinctrl_mikro2_irq: mikrobus2-irq {
+		pinmux = <PIN_PA22__GPIO>;
+		bias-disable;
+	};
+
+	pinctrl_spi4_default: spi4-default{
+		pinmux = <PIN_PA18__FLEXCOM4_IO0>,	/* MOSI */
+			 <PIN_PA17__FLEXCOM4_IO1>,	/* MISO */
+			 <PIN_PA16__FLEXCOM4_IO2>,	/* SPCK */
+			 <PIN_PA15__FLEXCOM4_IO3>,	/* CS0 */
+			 <PIN_PA14__FLEXCOM4_IO4>,	/* CS1 */
+			 <PIN_PA19__FLEXCOM4_IO5>,	/* CS2 */
+			 <PIN_PA20__FLEXCOM4_IO6>;	/* CS3 */
+		bias-disable;
+	};
+};
+
+&spi4 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_spi4_default>;
+	status = "okay";
+
+	ethernet@0 {
+		compatible = "microchip,lan8651", "microchip,lan8650";
+		reg = <0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mikro1_irq>;
+		interrupt-parent = <&pioa>;
+		interrupts = <PIN_PB7 IRQ_TYPE_LEVEL_LOW>;
+		reset-gpio = <&pioa PIN_PC9 GPIO_ACTIVE_LOW>;
+		nvmem-cells = <&eeprom0_eui48>;
+		nvmem-cell-names = "mac-address";
+		max-speed = <10>;
+		managed = "in-band-status";
+		spi-max-frequency = <15000000>;
+		status = "okay";
+	};
+
+	ethernet@1 {
+		compatible = "microchip,lan8651", "microchip,lan8650";
+		reg = <1>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mikro2_irq>;
+		interrupt-parent = <&pioa>;
+		interrupts = <PIN_PA22 IRQ_TYPE_LEVEL_LOW>;
+		reset-gpio = <&pioa PIN_PC9 GPIO_ACTIVE_LOW>;
+		max-speed = <10>;
+		managed = "in-band-status";
+		spi-max-frequency = <15000000>;
+		status = "okay";
+	};
+};

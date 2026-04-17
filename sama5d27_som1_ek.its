@@ -22,11 +22,8 @@
 			compression = "none";
 			load = <0x22000000>;
 			entry = <0x22000000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 
@@ -37,11 +34,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23000000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 
@@ -52,11 +46,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23130000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 
@@ -67,11 +58,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23140000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 
@@ -82,11 +70,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23150000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 
@@ -97,11 +82,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23160000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 
@@ -112,11 +94,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23170000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 
@@ -127,11 +106,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23180000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 
@@ -202,11 +178,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x231D0000>;
-			hash-1 {
-				algo = "crc32";
-			};
-			hash-2 {
-				algo = "sha1";
+			hash {
+				algo = "sha256";
 			};
 		};
 

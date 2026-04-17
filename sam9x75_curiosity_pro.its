@@ -159,6 +159,36 @@
 			};
 		};
 
+		fdt_gmac_ksz9897 {
+			description = "Device Tree blob for KSZ9897 RGMII switch overlay";
+			data = /incbin/("./sam9x75_curiosity_pro/sam9x75_curiosity_pro_gmac_ksz9897.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_lan8670 {
+			description = "Device Tree overlay for a LAN8670 RMII 10BaseT1S PHY";
+			data = /incbin/("./sam9x75_curiosity_pro/sam9x75_curiosity_pro_gmac_lan8670.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_i2s_proto {
 			description = "Device Tree blob PROTO Audio board overlay";
 			data = /incbin/("./sam9x75_curiosity_pro/sam9x75_curiosity_pro_i2s_proto.dtbo");
@@ -204,6 +234,21 @@
 			load = <0x23160000>;
 			hash {
 				algo = "sha256";
+			};
+		};
+
+		fdt_mikro_lan8650 {
+			description = "Device Tree blob LAN8650 10BaseT1S MAC-PHY click board";
+			data = /incbin/("./sam9x75_curiosity_pro/sam9x75_curiosity_pro_mikro_lan8650.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23160000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
 			};
 		};
 
@@ -311,6 +356,16 @@
 			fdt = "fdt_gmac_ksz9563";
 		};
 
+		ksz9897 {
+			description = "FDT overlay blob for KSZ9897 RGMII switch Daughter Card";
+			fdt = "fdt_gmac_ksz9897";
+		};
+
+		lan8670 {
+			description = "FDT overlay blob for a LAN8670 T1S PHY";
+			fdt = "fdt_gmac_lan8670";
+		};
+
 		i2s_proto {
 			description = "FDT overlay blob for I2S PROTO audio board";
 			fdt = "fdt_i2s_proto";
@@ -329,6 +384,11 @@
 		spi_click {
 			description = "FDT overlay blob for at25ff321a spi flash clickboard";
 			fdt = "fdt_spi_click";
+		};
+
+		lan8650 {
+			description = "FDT overlay blob for a LAN8650 T1S MAC-PHY Mikroe Bus 1";
+			fdt = "fdt_mikro_lan8650";
 		};
 
 		wifi_st60 {

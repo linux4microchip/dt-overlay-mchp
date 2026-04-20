@@ -118,11 +118,8 @@
                         arch = "arm";
                         compression = "none";
                         load = <0x23190000>;
-                        hash-1 {
-                                algo = "crc32";
-                        };
-                        hash-2 {
-                                algo = "sha1";
+                        hash {
+                                algo = "sha256";
                         };
                 };
 
@@ -133,11 +130,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x231A0000>;
-			hash-1 {
-			        algo = "crc32";
-			};
-			hash-2 {
-			        algo = "sha1";
+			hash {
+			        algo = "sha256";
 			};
 		};
 
@@ -148,11 +142,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x231B0000>;
-			hash-1 {
-			        algo = "crc32";
-			};
-			hash-2 {
-			        algo = "sha1";
+			hash {
+			        algo = "sha256";
 			};
 		};
 
@@ -163,11 +154,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x231C0000>;
-			hash-1 {
-			        algo = "crc32";
-			};
-			hash-2 {
-			        algo = "sha1";
+			hash {
+			        algo = "sha256";
 			};
 		};
 
@@ -190,11 +178,8 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x231E0000>;
-			hash-1 {
-			        algo = "crc32";
-			};
-			hash-2 {
-			        algo = "sha1";
+			hash {
+			        algo = "sha256";
 			};
 		};
 	};

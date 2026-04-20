@@ -166,11 +166,8 @@
                         arch = "arm";
                         compression = "none";
                         load = <0x231a0000>;
-                        hash-1 {
-                                algo = "crc32";
-                        };
-                        hash-2 {
-                                algo = "sha1";
+                        hash {
+                                algo = "sha256";
                         };
                 };
 

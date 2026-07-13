@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Flattened Image Tree file for Radiation-Tolerant (RT) PolarFire SoC Dev Kit
+ *
+ * Copyright (C) 2026 Microchip Technology Inc. and its subsidiaries.
+ * Author: Jamie Gibbons <jamie.gibbons@microchip.com>
+ *
+ */
+
+/dts-v1/;
+
+/ {
+	description = "U-Boot fitImage for the RTPFS Dev Kit";
+	#address-cells = <2>;
+
+		images {
+			kernel {
+				description = "Linux kernel";
+				data = /incbin/("./Image.gz");
+				type = "kernel";
+				arch = "riscv";
+				os = "linux";
+				compression = "gzip";
+				load = <0x80200000>;
+				entry = <0x80200000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+			fdt-rtpfs-dev-kit.dtb {
+				description = "Flattened Device Tree blob";
+				data = /incbin/("./dts/microchip/rtpfs-dev-kit.dtb");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x8a000000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+		};
+
+		configurations {
+			default = "conf-microchip,rtpfs-dev-kit";
+			conf-microchip,rtpfs-dev-kit {
+				description = "1 Linux kernel, FDT blob";
+				kernel = "kernel";
+				fdt = "fdt-rtpfs-dev-kit.dtb";
+			};
+
+			conf-microchip,fdt-rtpfs-dev-kit.dtb {
+				description = "Base FDT blob for RTPFS Dev kit";
+				fdt = "fdt-rtpfs-dev-kit.dtb";
+			};
+		};
+};
+

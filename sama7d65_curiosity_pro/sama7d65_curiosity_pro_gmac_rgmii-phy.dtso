@@ -34,6 +34,9 @@
 	phy-mode = "rgmii-id";
 	status = "okay";
 
+	nvmem-cells = <&mac_address_eui48>;
+	nvmem-cell-names = "mac-address";
+
 	ethernet-phy@1 {
 		reg = <0x1>;
 		interrupt-parent = <&pioa>;
@@ -89,5 +92,20 @@
 		pinmux = <PIN_PB1__G0_REFCK>;
 		slew-rate = <0>;
 		bias-pull-up;
+	};
+};
+
+&qspi0 {
+	flash@0 {
+		sfdp {
+			compatible = "jedec,sfdp";
+
+			nvmem-layout {
+				compatible = "microchip,sst26vf-sfdp-eui";
+
+				mac_address_eui48: mac-address {
+				};
+			};
+		};
 	};
 };

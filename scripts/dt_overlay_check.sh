@@ -39,6 +39,7 @@ declare -A DTSO_DIR_TO_CFG=(							\
 	["sama7d65_curiosity"]="sama7_defconfig"				\
 	["sama7g5ek"]="sama7_defconfig"						\
 	["sama7g54_curiosity"]="sama7_defconfig"				\
+	["sama7g54_curiosity_pro"]="sama7_defconfig"				\
 			);
 
 # Variable to hold the link between DTSO directory and its related devicetree
@@ -63,6 +64,7 @@ declare -A DTSO_DIR_TO_DT=(							\
 	["sama7d65_curiosity"]="microchip/at91-sama7d65_curiosity.dt"			\
 	["sama7g5ek"]="microchip/at91-sama7g5ek.dt"					\
 	["sama7g54_curiosity"]="microchip/at91-sama7g54_curiosity.dt"			\
+	["sama7g54_curiosity_pro"]="microchip/at91-sama7g54_curiosity_pro.dt"		\
 			);
 
 print_options() {

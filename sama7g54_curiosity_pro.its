@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Flattened Image Tree file for SAMA7G54 Curiosity Pro board
+ *
+ * Copyright (C) 2026 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Varshini Rajendran <varshini.rajendran@microchip.com>
+ */
+/dts-v1/;
+
+/ {
+	description = "Microchip SAMA7G54-Curiosity-Pro FIT Image";
+	#address-cells = <1>;
+
+	images {
+		kernel {
+			description = "Linux4SAM Linux kernel";
+			data = /incbin/("./zImage");
+			type = "kernel";
+			arch = "arm";
+			os = "linux";
+			compression = "none";
+			load = <0x62000000>;
+			entry = <0x62000000>;
+			hash {
+				algo = "sha256";
+			};
+		};
+
+		base_fdt {
+			description = "SAMA7G54-Curiosity-Pro Flattened Device Tree blob";
+			data = /incbin/("./at91-sama7g54_curiosity_pro.dtb");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61000000>;
+			hash {
+				algo = "sha256";
+			};
+		};
+
+		fdt_gmac_rgmii-phy {
+			description = "Device Tree blob for Gigabit PHY overlay";
+			data = /incbin/("./sama7g54_curiosity_pro/sama7g54_curiosity_pro_gmac_rgmii-phy.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61100000>;
+			hash {
+				algo = "sha256";
+			};
+		};
+	};
+
+	configurations {
+		default = "kernel_dtb";
+
+		kernel_dtb {
+			description = "Linux kernel and base FDT blob for SAMA7G54-Curiosity-Pro board";
+			kernel = "kernel";
+			fdt = "base_fdt";
+		};
+
+		base_dtb {
+			description = "Base FDT blob for SAMA7G54-Curiosity-Pro board";
+			fdt = "base_fdt";
+		};
+
+		rgmii-phy {
+			description = "FDT overlay blob for Ethernet PHY";
+			fdt = "fdt_gmac_rgmii-phy";
+		};
+	};
+};
